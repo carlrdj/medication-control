@@ -332,29 +332,23 @@ public class SaleView {
     }
     */
     
-    public void saleAmountCollected(int use_id, int med_id, String med_name, Date date){
+    public void saleAmountCollected(int use_id, int med_id, String med_name, String date){
         List<Sale> listSale = daoSale.saleList();
         
-        for (int i = 0; i < listSale.size(); i++) { 
-             System.err.println("  "+listSale.get(i).getSal_id() + " - ");
-            if (listSale.get(i).getUse_id() == use_id && listSale.get(i).getSal_date().equals(date)) {                
-                List<SaleDetail> listSaleDetail = daoSaleDetail.saleDetailList();
-                Double amountCollected = 0.0;
-                for (int j = 0; j < listSaleDetail.size(); j++) {
-                    /*
-                    sat_det_id: 6 
-                    sat_id: 4 
-                    med_id: 1 
-                    sat_det_quantity: 90
-                    */
-                    if (listSale.get(i).getSal_id() == listSaleDetail.get(j).getSal_id() && listSaleDetail.get(j).getMed_id() == med_id) {
-                        amountCollected += listSaleDetail.get(j).getSal_det_quantity() * MenuView.medicationView.medicationGetUnitPriceById(med_id) * igv;
-                    }
+        for (int i = 0; i < listSale.size(); i++) {
+            List<SaleDetail> listSaleDetail = daoSaleDetail.saleDetailList();
+            Double amountCollected = 0.0;
+            for (int j = 0; j < listSaleDetail.size(); j++) {
+                if (listSale.get(i).getSal_date().toString().equals(date) && 
+                        listSale.get(i).getUse_id() == use_id &&
+                        listSaleDetail.get(j).getMed_id() == med_id &&
+                        listSaleDetail.get(j).getSal_id() == listSale.get(i).getSal_id()) {
+                    //Entre en la fecha indicada
+                    amountCollected += (listSaleDetail.get(j).getSal_det_quantity() * MenuView.medicationView.medicationGetUnitPriceById(med_id)) + (igv * listSaleDetail.get(j).getSal_det_quantity() * MenuView.medicationView.medicationGetUnitPriceById(med_id));
                 }
-                if (amountCollected > 0.0) {
-                    System.out.println("\t" + med_name + "\t" + decimalFormat.format(amountCollected));
-                }
-                
+            }
+            if (amountCollected > 0.0) {
+                System.out.println("\t" + med_name + "\t" + decimalFormat.format(amountCollected));
             }
         }
     }

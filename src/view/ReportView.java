@@ -72,7 +72,7 @@ public class ReportView {
                                 List<Medication> listMedication = MenuView.medicationView.medicationList();
                                 for (int j = 0; j < listMedication.size(); j++) {
                                     //Double amountCollected = MenuView.saleView.saleAmountCollected(listUser.get(i).getUse_id(), listMedication.get(j).getMed_id(), date);
-                                    MenuView.saleView.saleAmountCollected(listUser.get(i).getUse_id(), listMedication.get(j).getMed_id(), listMedication.get(j).getMed_name(), date);
+                                    MenuView.saleView.saleAmountCollected(listUser.get(i).getUse_id(), listMedication.get(j).getMed_id(), listMedication.get(j).getMed_name(), date.toString());
                                     //System.out.println("\t" + listMedication.get(j).getMed_name()+ "\t\tS/. " + decimalFormat.format(amountCollected));
                                     //System.out.println(result);
                                 }
